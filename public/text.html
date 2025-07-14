@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Ваш текст</title>
+</head>
+<body>
+  <h1>Ваш текст</h1>
+  <form id="textForm">
+    <textarea id="content" name="content" rows="10" cols="50" placeholder="Введите ваш текст..."></textarea><br>
+    <button type="submit">Сохранить</button>
+  </form>
+  <div id="result"></div>
+  <script>
+    // Загрузка текста при открытии страницы
+    fetch('/text')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('content').value = data.content || '';
+      });
+
+    document.getElementById('textForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const content = document.getElementById('content').value;
+      const res = await fetch('/text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content })
+      });
+      const data = await res.json();
+      document.getElementById('result').textContent = data.success ? 'Сохранено!' : 'Ошибка сохранения';
+    });
+  </script>
+</body>
+</html> 
