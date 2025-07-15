@@ -26,8 +26,6 @@ services:
       PGPASSWORD: ']f1V6L{>>=?wCIh>-:kw'
     ports:
       - "3000:3000"
-    volumes:
-      - .:/app
     command: ["node", "src/app.js"]
 
 volumes:
